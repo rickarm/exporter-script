@@ -1,4 +1,5 @@
-export TOKEN=y1NbHe22lQ018BmtJRGf5U8HqWLsoZ
+sh init.sh
+
 #curl https://api.nylas.com/threads?limit=1 -u $TOKEN: > threads.json
 #curl https://api.nylas.com/threads?limit=1 -u $TOKEN: > messages.json
 #curl https://api.nylas.com/calendars?limit=1 -u $TOKEN: > calendar.json
