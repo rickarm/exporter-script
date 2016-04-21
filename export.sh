@@ -1,10 +1,12 @@
 #!/bin/sh
 
-## TEST
-# curl https://api.nylas.com/account -u $TOKEN:
+## CREATE NEEDED FOLDERS
+mkdir ./export
+mkdir ./csv
 
 ## GET CONTACTS
-((n = 28))  # Ideally programatically generated with curl https://api.nylas.com/contacts?view=count -u $TOKEN:
+n=`curl https://api.nylas.com/contacts?view=count -u $TOKEN: | grep -Eo '"count": \d+' | grep -Eo '\d+'`
+((n = (n/1000)+1 ))
 
 for i in $(seq 1 $n)
 do
@@ -13,7 +15,8 @@ do
 done
 
 ## GET CALENDAR
-((n = 4))  # Ideally programatically generated with curl https://api.nylas.com/events?view=count -u $TOKEN:
+n=`curl https://api.nylas.com/events?view=count -u $TOKEN: | grep -Eo '"count": \d+' | grep -Eo '\d+'`
+((n = (n/1000)+1 ))
 
 for i in $(seq 1 $n)
 do
@@ -22,7 +25,8 @@ do
 done
 
 ## GET THREADS
-((n = 62))   # Ideally programatically generated with curl https://api.nylas.com/threads?view=count -u $TOKEN:
+n=`curl https://api.nylas.com/threads?view=count -u $TOKEN: | grep -Eo '"count": \d+' | grep -Eo '\d+'`
+((n = (n/1000)+1 ))
 
 for i in $(seq 1 $n)
 do
@@ -30,5 +34,5 @@ do
   curl "https://api.nylas.com/threads?view=expanded&limit=1000&offset=$THREAD_OFFSET" -u $TOKEN: > ./export/thread$i.json
 done
 
-## GET MESSAGES
+## GET MESSAGES (NOT YET)
 #curl "https://api.nylas.com/messages?view=expanded&limit=1" -u $TOKEN: #> messages.json
